@@ -1,0 +1,54 @@
+on:
+  release:
+    types: [published]
+
+name: Main
+
+jobs:
+  build-and-push:
+    name: Build and Push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub Action
+        uses: actions/checkout@master
+
+      - name: Set env
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Make client envfile
+        run: |
+          cd client
+          cat > .env.production
+          echo "VITE_API_URL=${{ secrets.API_URL }}" >> .env.production
+          echo "VITE_URL=${{ secrets.URL }}" >> .env.production
+          echo "VITE_STORAGE_KEY=${{ secrets.STORAGE_KEY }}" >> .env.production
+          echo "$(<.env.production)"
+
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 20.16
+
+      - name: Install PNPM
+        run: npm install -g pnpm
+
+      - name: Install depends
+        run: |
+          cd client
+          pnpm install --ignore-scripts
+
+      - name: Build
+        run: |
+          cd client
+          pnpm build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: sa-east-1
+
+      - name: Deploy to S3
+        run: aws s3 sync ./client/dist/ s3://${{ vars.S3_BUCKET }} --delete
