@@ -1,5 +1,5 @@
 export * from './Container';
-export * from './CreateURLPopUp';
+export * from './CreateUrlPopUp';
 export * from './DataTable';
 export * from './DialogBox';
 export * from './Header';
