@@ -1,0 +1,40 @@
+.theme-switch {
+  border-radius: 50px;
+  position: relative;
+  width: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  .board {
+    width: 50px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 11px);
+    left: 5px;
+    border-radius: 50px;
+    background-color: #dedede;
+  }
+  .MuiIconButton-root {
+    background-color: #fff;
+    font-size: 1.25rem;
+    box-shadow:
+      0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+      0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    &:hover {
+      background-color: #fff;
+      filter: brightness(80%);
+    }
+  }
+}
+.theme-switch-dark {
+  justify-content: flex-end;
+  .MuiIconButton-root {
+    background-color: #121212;
+    &:hover {
+      background-color: #121212;
+      filter: brightness(80%);
+    }
+  }
+}

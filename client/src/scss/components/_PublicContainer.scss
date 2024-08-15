@@ -1,0 +1,62 @@
+.public-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  padding: 2rem 0;
+
+  .logo {
+    padding-bottom: 2rem;
+
+    text-align: center;
+  }
+
+  .container-box {
+    width: 75%;
+    height: auto;
+    margin: auto;
+  }
+
+  .container-box-sm {
+    max-width: 300px;
+  }
+
+  .container-box-md {
+    max-width: 600px;
+  }
+
+  .container-box-lg {
+    width: 85%;
+    max-width: 900px;
+  }
+
+  .container-content {
+    border-radius: 0.5rem;
+    padding: 2rem 1.5rem;
+
+    text-align: center;
+  }
+
+  .copyright {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.7rem;
+
+    .MuiTypography-caption {
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    a {
+      width: 70%;
+      max-width: 150px;
+      margin: auto;
+    }
+    img {
+      width: 100%;
+      min-width: 100px;
+    }
+  }
+}
