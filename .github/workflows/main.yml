@@ -21,7 +21,7 @@ jobs:
           cd client
           cat > .env.production
           echo "VITE_API_URL=${{ secrets.API_URL }}" >> .env.production
-          echo "VITE_URL=https://${{ vars.S3_BUCKET }}" >> .env.production
+          echo "VITE_URL=${{ secrets.URL }}" >> .env.production
           echo "VITE_STORAGE_KEY=${{ secrets.STORAGE_KEY }}" >> .env.production
           echo "$(<.env.production)"
 
