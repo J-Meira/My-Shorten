@@ -10,4 +10,8 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  build: {
+    outDir: '../MyShorten.API/wwwroot',
+    emptyOutDir: true,
+  },
 })

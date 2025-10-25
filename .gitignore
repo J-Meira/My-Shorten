@@ -22,10 +22,21 @@ dist-ssr
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
 
 # api prod and test
 api/build
 api/coverage
 api-pm2.json
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# React build output in wwwroot
+src/MyShorten.API/wwwroot/
