@@ -8,20 +8,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddApplicationServices(builder.Configuration);
+// Skip database registration in Testing environment - will be added by WebApplicationFactory
+var skipDatabase = builder.Environment.EnvironmentName == "Testing";
+builder.Services.AddApplicationServices(builder.Configuration, skipDatabase);
 
 var app = builder.Build();
 
-await DbInitializer.InitializeAsync(app.Services, app.Environment);
-
-HostingHelpers.MakeStaticEnvFile(app.Configuration, app.Logger);
-
-app.UseSwagger();
-app.UseSwaggerUI(options =>
+if (app.Environment.EnvironmentName != "Testing")
 {
-  options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyShorten API v1");
-  options.RoutePrefix = "swagger";
-});
+  await DbInitializer.InitializeAsync(app.Services, app.Environment);
+  HostingHelpers.MakeStaticEnvFile(app.Configuration, app.Logger);
+}
+
+if (app.Environment.EnvironmentName != "Testing")
+{
+  app.UseSwagger();
+  app.UseSwaggerUI(options =>
+  {
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyShorten API v1");
+    options.RoutePrefix = "swagger";
+  });
+}
 
 app.UseGlobalExceptionHandler();
 
@@ -32,24 +39,29 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseStaticFiles();
-
-app.MapFallback(async context =>
+if (app.Environment.EnvironmentName != "Testing")
 {
-  if (context.Request.Path.StartsWithSegments("/api") || 
-      context.Request.Path.StartsWithSegments("/swagger"))
+  app.UseStaticFiles();
+
+  app.MapFallback(async context =>
   {
-    context.Response.StatusCode = 404;
-    await context.Response.WriteAsJsonAsync(new
+    if (context.Request.Path.StartsWithSegments("/api") ||
+        context.Request.Path.StartsWithSegments("/swagger"))
     {
-      status = 404,
-      title = "Not Found",
-      detail = $"The requested endpoint '{context.Request.Path}' was not found."
-    });
-    return;
-  }
-  
-  await context.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath, "index.html"));
-});
+      context.Response.StatusCode = 404;
+      await context.Response.WriteAsJsonAsync(new
+      {
+        status = 404,
+        title = "Not Found",
+        detail = $"The requested endpoint '{context.Request.Path}' was not found."
+      });
+      return;
+    }
+
+    await context.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath, "index.html"));
+  });
+}
 
 app.Run();
+
+public partial class Program { }

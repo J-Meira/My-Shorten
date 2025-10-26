@@ -21,7 +21,7 @@ public class UsersController(
   private readonly ILogger<UsersController> _logger = logger;
 
   [HttpPost("sign-up")]
-  public async Task<ActionResult<long>> SignUp([FromBody] SignUpRequest request)
+  public async Task<ActionResult<UserDto>> SignUp([FromBody] SignUpRequest request)
   {
     if (await _userRepository.EmailExistsAsync(request.Email))
     {
@@ -39,7 +39,9 @@ public class UsersController(
 
     var userId = await _userRepository.CreateAsync(user);
 
-    return CreatedAtAction(nameof(SignUp), new { id = userId }, new { id = userId });
+    var userDto = new UserDto(userId, user.Name, user.Email);
+
+    return CreatedAtAction(nameof(SignUp), new { id = userId }, userDto);
   }
 
   [HttpPost("sign-in")]

@@ -16,6 +16,13 @@ public static class DbInitializer
 
         try
         {
+            if (environment.EnvironmentName == "Testing")
+            {
+                logger.LogInformation("Testing environment detected - ensuring database is created");
+                await context.Database.EnsureCreatedAsync();
+                return;
+            }
+
             logger.LogInformation("Checking for pending migrations...");
             
             var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
