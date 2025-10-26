@@ -1,41 +1,55 @@
+using MyShorten.API.Configuration;
+using MyShorten.API.Helpers;
+using MyShorten.API.Middleware;
+using MyShorten.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+await DbInitializer.InitializeAsync(app.Services, app.Environment);
 
-app.UseHttpsRedirection();
+HostingHelpers.MakeStaticEnvFile(app.Configuration, app.Logger);
 
-var summaries = new[]
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+  options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyShorten API v1");
+  options.RoutePrefix = "swagger";
+});
 
-app.MapGet("/weatherforecast", () =>
+app.UseGlobalExceptionHandler();
+
+app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.UseStaticFiles();
+
+app.MapFallback(async context =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+  if (context.Request.Path.StartsWithSegments("/api") || 
+      context.Request.Path.StartsWithSegments("/swagger"))
+  {
+    context.Response.StatusCode = 404;
+    await context.Response.WriteAsJsonAsync(new
+    {
+      status = 404,
+      title = "Not Found",
+      detail = $"The requested endpoint '{context.Request.Path}' was not found."
+    });
+    return;
+  }
+  
+  await context.Response.SendFileAsync(Path.Combine(app.Environment.WebRootPath, "index.html"));
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

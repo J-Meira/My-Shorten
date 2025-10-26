@@ -51,7 +51,7 @@ My-Shorten/
 │   └── MyShorten.Client/           # React frontend (builds to wwwroot)
 ├── tests/
 │   └── MyShorten.Tests/            # Unit & integration tests
-└── api/                             # Legacy Node.js API (reference only)
+└── legacy-node-api/                # Legacy Node.js API (reference only)
 ```
 
 ## Architecture Patterns
