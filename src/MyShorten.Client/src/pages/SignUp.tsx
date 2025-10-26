@@ -50,22 +50,21 @@ export const SignUp = () => {
   };
 
   const validate = async (formik: FormikProps<ISignUpData>) => {
-    formik.validateForm().then((errors) => {
-      if (Object.keys(errors).length === 0) {
-        return formik.handleSubmit();
-      }
+    const errors = await formik.validateForm();
+    if (Object.keys(errors).length === 0) {
+      return formik.handleSubmit();
+    }
 
-      const touchedFields = Object.keys(errors).reduce(
-        (acc, key) => {
-          acc[key as keyof ISignUpData] = true;
-          return acc;
-        },
-        {} as { [K in keyof ISignUpData]?: boolean },
-      );
+    const touchedFields = Object.keys(errors).reduce(
+      (acc, key) => {
+        acc[key as keyof ISignUpData] = true;
+        return acc;
+      },
+      {} as { [K in keyof ISignUpData]?: boolean },
+    );
 
-      formik.setTouched(touchedFields as FormikTouched<ISignUpData>, true);
-      return useToast.error(msgsDict('form'));
-    });
+    formik.setTouched(touchedFields as FormikTouched<ISignUpData>, true);
+    return useToast.error(msgsDict('form'));
   };
 
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
