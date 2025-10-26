@@ -10,11 +10,12 @@ import { MdClose as CloseIcon } from 'react-icons/md';
 
 import { CssBaseline, IconButton } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { DialogBox, Loading } from './components';
 
-import { GlobalError } from './pages';
+import { DialogBox, Loading } from '~/components';
 
-import { useAppSelector } from './redux/hooks';
+import { GlobalError } from '~/pages';
+
+import { useAppSelector } from '~/redux/hooks';
 
 export const App = () => {
   const { isDark } = useAppSelector((state) => state.system);

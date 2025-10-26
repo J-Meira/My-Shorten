@@ -6,13 +6,12 @@ import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-import { ISignInData, IUser } from '../../@types';
-import { IAuth, authServices } from '../../services';
-import { router } from '../../router';
-import { useCookies, useCrypto } from '../../utils/hooks';
-
-import { AppThunk, RootState } from '..';
-import { removeLoading, setLoading } from '.';
+import { removeLoading, setLoading } from '~/redux/slices';
+import { AppThunk, RootState } from '~/redux/store';
+import { router } from '~/router';
+import { IAuth, authServices } from '~/services';
+import { ISignInData, IUser } from '~/types';
+import { useCookies, useCrypto } from '~/utils/hooks';
 
 interface IAuthState {
   accessToken: string | null;

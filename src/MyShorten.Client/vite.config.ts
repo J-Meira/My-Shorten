@@ -1,7 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -14,4 +13,17 @@ export default defineConfig({
     outDir: '../MyShorten.API/wwwroot',
     emptyOutDir: true,
   },
-})
+  resolve: {
+    alias: {
+      '~': '/src',
+      '~/@types': '/src/@types',
+      '~/components': '/src/components',
+      '~/config': '/src/config',
+      '~/pages': '/src/pages',
+      '~/redux': '/src/redux',
+      '~/routes': '/src/routes',
+      '~/services': '/src/services',
+      '~/utils': '/src/utils',
+    },
+  },
+});

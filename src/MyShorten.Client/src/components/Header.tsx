@@ -12,11 +12,10 @@ import {
 } from '@mui/material';
 import { MdArrowDropDown } from 'react-icons/md';
 
-import { Logo } from './Logo';
-import { ThemeSwitch } from './ThemeSwitch';
+import { Logo, ThemeSwitch } from '~/components';
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { signOut } from '../redux/slices';
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { signOut } from '~/redux/slices';
 
 export const Header = () => {
   const dispatch = useAppDispatch();

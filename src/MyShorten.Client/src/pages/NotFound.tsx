@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Button, Typography } from '@mui/material';
 
-import { PublicContainer } from '../components';
+import { PublicContainer } from '~/components';
 
 export const NotFound = () => (
   <PublicContainer size='md'>

@@ -2,9 +2,9 @@ import { Outlet } from 'react-router-dom';
 
 import { Paper } from '@mui/material';
 
-import { Header } from './components';
+import { Header } from '~/components';
 
-import { useAppSelector } from './redux/hooks';
+import { useAppSelector } from '~/redux/hooks';
 
 export const Layout = () => {
   const { backgroundColor } = useAppSelector((state) => state.system);

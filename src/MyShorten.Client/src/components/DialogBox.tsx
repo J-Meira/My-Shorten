@@ -8,9 +8,10 @@ import {
   IconButton,
 } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { closeDialog } from '../redux/slices';
 import { MdClose } from 'react-icons/md';
+
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { closeDialog } from '~/redux/slices';
 
 export const DialogBox = () => {
   const dispatch = useAppDispatch();

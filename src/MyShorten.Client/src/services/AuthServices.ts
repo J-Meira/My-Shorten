@@ -1,11 +1,9 @@
-import { api } from '.';
+import { FormikErrors } from 'formik';
 
-import {
-  IServiceResult,
-  ISignInData,
-  ISignUpData,
-  IUser,
-} from '../@types';
+import { IServiceResult, ISignInData, ISignUpData, IUser } from '~/types';
+import { useToast } from '~/utils/hooks';
+
+import { api } from '.';
 
 export interface IAuth {
   accessToken: string;
@@ -15,20 +13,20 @@ export interface IAuth {
 
 const signIn = async (payload: ISignInData): Promise<IAuth | void> => {
   try {
-    const { data } = await api.post('/sign-in', payload);
+    const { data } = await api.post('/users/sign-in', payload);
     if (data) return data;
     return;
-  } catch (error) {
-    console.log(error);
+  } catch (errors: unknown) {
+    if (!(errors as Error)?.message) useToast.error('Invalid credentials');
     return;
   }
 };
 
 const signUp = async (
   payload: ISignUpData,
-): Promise<IServiceResult<null>> => {
+): Promise<IServiceResult<null, ISignUpData>> => {
   try {
-    const result = await api.post('/sign-up', payload);
+    const result = await api.post('/users/sign-up', payload);
     if (result)
       return {
         success: true,
@@ -37,10 +35,12 @@ const signUp = async (
     return {
       success: false,
     };
-  } catch (errors) {
-    console.log(errors);
+  } catch (errors: unknown) {
     return {
       success: false,
+      errors: (errors as Error)?.message
+        ? {}
+        : (errors as FormikErrors<ISignUpData>),
     };
   }
 };

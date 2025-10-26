@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { Formik, FormikHelpers, FormikProps } from 'formik';
+
 import {
   Dialog,
   DialogTitle,
@@ -11,17 +13,15 @@ import {
 } from '@mui/material';
 import { MdCheck, MdClose } from 'react-icons/md';
 
-import { Formik, FormikProps } from 'formik';
+import { UrlButton, Input } from '~/components';
 
-import { UrlButton, Input } from '.';
-
-import { IUrl, IUrlForm } from '../@types';
-import { AddUrl, removeLoading, setLoading } from '../redux/slices';
-import { useAppDispatch } from '../redux';
-import { urlServices } from '../services';
-import { useToast } from '../utils/hooks';
-import { msgsDict } from '../utils/functions';
-import { createUrlSchema } from '../utils/schemas';
+import { useAppDispatch } from '~/redux/hooks';
+import { AddUrl, removeLoading, setLoading } from '~/redux/slices';
+import { IUrl, IUrlForm } from '~/types';
+import { urlServices } from '~/services';
+import { useToast } from '~/utils/hooks';
+import { msgsDict } from '~/utils/functions';
+import { createUrlSchema } from '~/utils/schemas';
 
 interface Props {
   isOpen: boolean;
@@ -32,7 +32,10 @@ export const CreateUrlPopUp = ({ isOpen, toggle }: Props) => {
   const formRef = useRef<FormikProps<IUrlForm>>(null);
   const [url, setUrl] = useState<IUrl | undefined>(undefined);
 
-  const onSubmit = async (data: IUrlForm) => {
+  const onSubmit = async (
+    data: IUrlForm,
+    helpers: FormikHelpers<IUrlForm>,
+  ) => {
     dispatch(setLoading('createUrl'));
     const result = await urlServices.create(data);
     dispatch(removeLoading('createUrl'));
@@ -40,6 +43,7 @@ export const CreateUrlPopUp = ({ isOpen, toggle }: Props) => {
       setUrl(result.data);
       dispatch(AddUrl());
     }
+    if (result.errors) helpers.setErrors(result.errors);
   };
 
   const validate = (formik: FormikProps<IUrlForm>) => {
@@ -82,7 +86,7 @@ export const CreateUrlPopUp = ({ isOpen, toggle }: Props) => {
         url: '',
       }}
       validationSchema={createUrlSchema}
-      onSubmit={(values) => onSubmit(values)}
+      onSubmit={onSubmit}
       enableReinitialize
       innerRef={formRef}
     >
