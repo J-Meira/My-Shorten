@@ -46,7 +46,6 @@ export const SignUp = () => {
       useToast.success('Sign Up Complete');
       navigate('/sign-in');
     }
-    console.log(result);
     if (result.errors) helpers.setErrors(result.errors);
   };
 
