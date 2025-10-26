@@ -1,7 +1,10 @@
 import { useState } from 'react';
+
 import { Button, Tooltip } from '@mui/material';
 import { MdContentCopy } from 'react-icons/md';
-import { IUrl } from '../@types';
+
+import { env } from '~/config';
+import { IUrl } from '~/types';
 
 interface Props {
   content: IUrl;
@@ -34,7 +37,7 @@ export const UrlButton = ({ content, large }: Props) => {
     setTooltipOpen(false);
   };
 
-  const getLink = () => `${import.meta.env.VITE_URL}/${content.code}`;
+  const getLink = () => `${env.url}/${content.code}`;
 
   return (
     <Tooltip title={tooltipText} open={tooltipOpen} disableHoverListener>

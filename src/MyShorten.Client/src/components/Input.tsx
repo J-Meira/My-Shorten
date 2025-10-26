@@ -16,8 +16,9 @@ import {
   MdVisibility as VisibilityIcon,
   MdVisibilityOff as VisibilityOffIcon,
 } from 'react-icons/md';
-import { defaultGrid } from './defaultGrid';
-import { IOption } from '../@types';
+
+import { defaultGrid } from '~/components/defaultGrid';
+import { IOption } from '~/types';
 
 export type IInputProps = TextFieldProps & {
   className?: string;

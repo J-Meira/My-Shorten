@@ -3,13 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { Formik, FormikProps } from 'formik';
 
-import { Input, PublicContainer, SEO } from '../components';
-
-import { ISignInData } from '../@types';
-import { signInSchema } from '../utils/schemas';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { getAuthenticated, signIn } from '../redux/slices';
 import { Button, Grid, Typography } from '@mui/material';
+
+import { Input, PublicContainer, SEO } from '~/components';
+
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { getAuthenticated, signIn } from '~/redux/slices';
+import { ISignInData } from '~/types';
+import { signInSchema } from '~/utils/schemas';
 
 export const SignIn = () => {
   const dispatch = useAppDispatch();

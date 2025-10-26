@@ -1,8 +1,9 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
-import { App } from '../App';
-import { Layout } from '../Layout';
-import { RequireAuth } from './RequireAuth';
+import { App } from '~/App';
+import { Layout } from '~/Layout';
+
+import { RequireAuth } from '~/router/RequireAuth';
 
 import {
   Dashboard,
@@ -11,7 +12,7 @@ import {
   SignIn,
   SignOut,
   SignUp,
-} from '../pages';
+} from '~/pages';
 
 export const router = createBrowserRouter([
   {

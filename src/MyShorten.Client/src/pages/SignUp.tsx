@@ -1,23 +1,24 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps, FormikTouched } from 'formik';
 
-import { Input, PublicContainer, SEO } from '../components';
+import { Button, Grid, List, ListItem, Typography } from '@mui/material';
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 
-import { signUpSchema } from '../utils/schemas';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { Input, PublicContainer, SEO } from '~/components';
+
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import {
   getAuthenticated,
   removeLoading,
   setLoading,
-} from '../redux/slices';
-import { Button, Grid, List, ListItem, Typography } from '@mui/material';
-import { ISignUpData } from '../@types';
-import { authServices } from '../services';
-import { useToast } from '../utils/hooks';
-import { msgsDict } from '../utils/functions';
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+} from '~/redux/slices';
+import { authServices } from '~/services';
+import { ISignUpData } from '~/types';
+import { useToast } from '~/utils/hooks';
+import { msgsDict } from '~/utils/functions';
+import { signUpSchema } from '~/utils/schemas';
 
 export const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -34,7 +35,10 @@ export const SignUp = () => {
   const isAuthenticated = useAppSelector(getAuthenticated);
   const formRef = useRef<FormikProps<ISignUpData>>(null);
 
-  const onSubmit = async (data: ISignUpData) => {
+  const onSubmit = async (
+    data: ISignUpData,
+    helpers: FormikHelpers<ISignUpData>,
+  ) => {
     dispatch(setLoading('signUp'));
     const result = await authServices.signUp(data);
     dispatch(removeLoading('signUp'));
@@ -42,11 +46,27 @@ export const SignUp = () => {
       useToast.success('Sign Up Complete');
       navigate('/sign-in');
     }
+    console.log(result);
+    if (result.errors) helpers.setErrors(result.errors);
   };
 
-  const validate = (formik: FormikProps<ISignUpData>) => {
-    if (!formik.isValid) useToast.error(msgsDict('form'));
-    formik.handleSubmit();
+  const validate = async (formik: FormikProps<ISignUpData>) => {
+    formik.validateForm().then((errors) => {
+      if (Object.keys(errors).length === 0) {
+        return formik.handleSubmit();
+      }
+
+      const touchedFields = Object.keys(errors).reduce(
+        (acc, key) => {
+          acc[key as keyof ISignUpData] = true;
+          return acc;
+        },
+        {} as { [K in keyof ISignUpData]?: boolean },
+      );
+
+      formik.setTouched(touchedFields as FormikTouched<ISignUpData>, true);
+      return useToast.error(msgsDict('form'));
+    });
   };
 
   const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +109,7 @@ export const SignUp = () => {
             password: '',
           }}
           validationSchema={signUpSchema}
-          onSubmit={(values) => onSubmit(values)}
+          onSubmit={onSubmit}
           enableReinitialize
           innerRef={formRef}
         >

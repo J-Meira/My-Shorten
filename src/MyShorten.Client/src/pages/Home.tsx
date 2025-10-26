@@ -1,10 +1,13 @@
-import { Box, Button, Typography } from '@mui/material';
-import { Container, SEO } from '../components';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../redux';
-import { removeLoading, setLoading } from '../redux/slices';
-import { urlServices } from '../services';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
+import { Box, Button, Typography } from '@mui/material';
+
+import { Container, SEO } from '~/components';
+
+import { useAppDispatch } from '~/redux/hooks';
+import { removeLoading, setLoading } from '~/redux/slices';
+import { urlServices } from '~/services';
 
 export const Home = () => {
   const navigate = useNavigate();

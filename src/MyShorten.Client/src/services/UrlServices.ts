@@ -1,4 +1,4 @@
-import { api } from '.';
+import { FormikErrors } from 'formik';
 
 import {
   IGetAllParams,
@@ -6,8 +6,10 @@ import {
   IUrl,
   IUrlForm,
   IServiceResult,
-} from '../@types';
-import { useToast } from '../utils/hooks';
+} from '~/types';
+import { useToast } from '~/utils/hooks';
+
+import { api } from '.';
 
 const getAll = async (
   params: IGetAllParams,
@@ -16,24 +18,24 @@ const getAll = async (
     const { data } = await api.get('/urls', { params });
     if (data) return data;
     return;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return;
   }
 };
 
 const getByCode = async (code: string): Promise<IUrl | void> => {
   try {
-    const { data } = await api.get(`/get-url/${code}`);
+    const { data } = await api.get(`/urls/code/${code}`);
     if (data) return data;
     return;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return;
   }
 };
 
-const create = async (record: IUrlForm): Promise<IServiceResult<IUrl>> => {
+const create = async (
+  record: IUrlForm,
+): Promise<IServiceResult<IUrl, IUrlForm>> => {
   try {
     const result = await api.post(`/urls`, record);
     if (result.data)
@@ -45,9 +47,11 @@ const create = async (record: IUrlForm): Promise<IServiceResult<IUrl>> => {
       success: false,
     };
   } catch (errors) {
-    console.log(errors);
     return {
       success: false,
+      errors: (errors as Error)?.message
+        ? {}
+        : (errors as FormikErrors<IUrlForm>),
     };
   }
 };
@@ -60,8 +64,7 @@ const deleteById = async (id: number): Promise<boolean | void> => {
       return true;
     }
     return;
-  } catch (error) {
-    console.log(error);
+  } catch {
     return;
   }
 };

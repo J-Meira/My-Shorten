@@ -2,9 +2,9 @@ import { ReactNode } from 'react';
 
 import { Box, Paper } from '@mui/material';
 
-import { Logo, ThemeSwitch } from '.';
+import { Logo, ThemeSwitch } from '~/components';
 
-import { useAppSelector } from '../redux';
+import { useAppSelector } from '~/redux/hooks';
 
 interface Props {
   children: ReactNode;

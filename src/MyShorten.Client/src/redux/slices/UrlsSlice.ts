@@ -1,10 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { IGetAllParams, IList, IUrl } from '../../@types';
-import { urlServices } from '../../services';
-
-import { AppThunk } from '..';
-import { removeLoading, setLoading } from '.';
+import { removeLoading, setLoading } from '~/redux/slices';
+import { AppThunk } from '~/redux/store';
+import { urlServices } from '~/services';
+import { IGetAllParams, IList, IUrl } from '~/types';
 
 interface IUrlsState extends IList<IUrl> {}
 

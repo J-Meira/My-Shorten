@@ -2,7 +2,7 @@ import { FallbackProps, useErrorBoundary } from 'react-error-boundary';
 
 import { Button, Typography } from '@mui/material';
 
-import { PublicContainer } from '../components';
+import { PublicContainer } from '~/components';
 
 export const GlobalError = ({ error }: FallbackProps) => {
   const { resetBoundary } = useErrorBoundary();

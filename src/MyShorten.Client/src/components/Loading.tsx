@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Paper, Typography } from '@mui/material';
 
-import { useAppSelector } from '../redux/hooks';
-import { getLoading } from '../redux/slices';
+import { useAppSelector } from '~/redux/hooks';
+import { getLoading } from '~/redux/slices';
 
 export const Loading = () => {
   const isLoading = useAppSelector(getLoading);

@@ -1,6 +1,8 @@
 import CryptoJS from 'crypto-js';
 
-const S_KEY = String(import.meta.env.VITE_STORAGE_KEY);
+import { env } from '~/config';
+
+const S_KEY = String(env.storageKey);
 
 /**
  * Encrypts data using AES encryption.

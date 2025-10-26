@@ -1,7 +1,7 @@
 import { object, string, ObjectSchema } from 'yup';
 
-import { ISignInData, ISignUpData, IUrlForm } from '../@types';
-import { msgsDict } from './functions';
+import { ISignInData, ISignUpData, IUrlForm } from '~/types';
+import { msgsDict } from '~/utils/functions';
 
 const passwordSchema = () =>
   string().test({
@@ -44,7 +44,7 @@ export const createUrlSchema: ObjectSchema<IUrlForm> = object({
       test(value, ctx) {
         if (
           !value.match(
-            /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
+            /^[(http(s)?):/(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/,
           )
         ) {
           return ctx.createError({

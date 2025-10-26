@@ -4,8 +4,9 @@ import {
   MdDarkMode as DarkModeIcon,
   MdLightMode as LightModeIcon,
 } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { handleTheme } from '../redux/slices';
+
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { handleTheme } from '~/redux/slices';
 
 export const ThemeSwitch = () => {
   const dispatch = useAppDispatch();

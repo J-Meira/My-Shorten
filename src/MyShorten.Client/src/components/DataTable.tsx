@@ -13,11 +13,11 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Input, Pagination } from './';
+import { Input, Pagination } from '~/components';
 
-import { IGetAllParams } from '../@types';
-import { useAppDispatch, useAppSelector } from '../redux';
-import { handleRows } from '../redux/slices';
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { handleRows } from '~/redux/slices';
+import { IGetAllParams } from '~/types';
 
 export type IOrder = 'asc' | 'desc';
 

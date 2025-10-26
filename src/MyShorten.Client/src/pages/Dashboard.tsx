@@ -9,16 +9,16 @@ import {
   DataTable,
   SEO,
   UrlButton,
-} from '../components';
+} from '~/components';
 
-import { IGetAllParams, IUrl } from '../@types';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { IGetAllParams, IUrl } from '~/types';
+import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import {
   clearDialog,
   deleteUrl,
   getAllUrls,
   openDialog,
-} from '../redux/slices';
+} from '~/redux/slices';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
