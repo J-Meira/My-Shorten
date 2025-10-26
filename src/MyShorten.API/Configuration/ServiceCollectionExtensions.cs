@@ -14,10 +14,13 @@ namespace MyShorten.API.Configuration;
 
 public static class ServiceCollectionExtensions
 {
-  public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+  public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, bool skipDatabase = false)
   {
-    services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    if (!skipDatabase)
+    {
+      services.AddDbContext<AppDbContext>(options =>
+          options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    }
 
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IUrlRepository, UrlRepository>();

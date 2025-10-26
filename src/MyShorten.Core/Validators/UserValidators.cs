@@ -29,7 +29,7 @@ public class SignUpRequestValidator : AbstractValidator<SignUpRequest>
         .MinimumLength(10)
         .WithMessage("password must be at least 10 characters")
         .Must(HaveValidPasswordComplexity)
-        .WithMessage("password invalid, must including at least one number, one upper case letter, one down case letter and one special character");
+        .WithMessage("password must contain at least one uppercase, lowercase, number and special character");
   }
 
   private bool HaveValidPasswordComplexity(string password)

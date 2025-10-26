@@ -423,8 +423,8 @@ When asking Copilot for help:
 
 ## References
 
-**Legacy API:** `api/src/` - Reference for business logic and API contracts
-**Frontend:** `src/client/src/` - React app that will consume the new API
+**Legacy API:** `legacy-node-api/src/` - Reference for business logic and API contracts
+**Frontend:** `src/MyShorten.Client/src/` - React app that will consume the new API
 **Documentation:** Update README.md as you migrate features
 
 ---

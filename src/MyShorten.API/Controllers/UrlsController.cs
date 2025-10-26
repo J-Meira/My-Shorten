@@ -108,7 +108,7 @@ public class UrlsController(
 
     if (url.UserId != userId)
     {
-      return BadRequest(new { message = "Url invalid" });
+      return Forbid();
     }
 
     await _urlRepository.DeleteAsync(id);
