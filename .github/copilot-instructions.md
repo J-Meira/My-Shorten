@@ -1,8 +1,8 @@
-# My-Shorten - Migration to .NET 9.0
+# My-Shorten - Migration to .NET 10.0
 
 ## Project Overview
 
-Full-stack URL shortener application migrating from Node.js/TypeScript to .NET 9.0, while keeping React/Vite frontend.
+Full-stack URL shortener application migrating from Node.js/TypeScript to .NET 10.0, while keeping React/Vite frontend.
 
 ### Technology Stack
 
@@ -12,7 +12,7 @@ Full-stack URL shortener application migrating from Node.js/TypeScript to .NET 9
 - JWT authentication
 - bcryptjs for password hashing
 
-**Target (.NET 9.0 API):**
+**Target (.NET 10.0 API):**
 - ASP.NET Core Web API
 - Entity Framework Core with PostgreSQL
 - JWT Bearer authentication
