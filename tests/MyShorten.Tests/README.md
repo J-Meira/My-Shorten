@@ -1,7 +1,7 @@
 # Test Suite Documentation
 
 ## Overview
-Comprehensive test suite for My-Shorten .NET 9.0 API covering:
+Comprehensive test suite for My-Shorten .NET 10.0 API covering:
 - **Unit Tests**: Repository methods and FluentValidation validators
 - **Integration Tests**: API endpoints end-to-end with in-memory database
 

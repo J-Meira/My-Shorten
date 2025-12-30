@@ -70,7 +70,7 @@ public static class ServiceCollectionExtensions
       {
         Title = "MyShorten API",
         Version = "v1",
-        Description = "URL Shortener API built with ASP.NET Core 9.0"
+        Description = "URL Shortener API built with ASP.NET Core 10.0"
       });
 
       options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
